@@ -1,3 +1,6 @@
+# Module of urls of oc_lettings_site app. It define the url of each views.
+
+
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import handler403, handler500
