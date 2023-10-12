@@ -10,16 +10,18 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     """Model representing a user's profile in the application.
 
-    This model is used to store additional information about a user, such as their
-    favorite city. It is linked to the built-in 'User' model through a one-to-one
-    relationship.
+    This model is used to store additional information about a user,
+    such as their
+    favorite city. It is linked to the built-in 'User' model
+    through a one-to-one relationship.
 
     Attributes:
         user (OneToOneField): The user associated with the profile.
         favorite_city (CharField): The user's favorite city (optional).
 
     Methods:
-        __str__(): Returns a string representation of the user's profile (the username).
+        __str__(): Returns a string representation
+        of the user's profile (the username).
 
     Returns:
         str: A string representing the user's profile.

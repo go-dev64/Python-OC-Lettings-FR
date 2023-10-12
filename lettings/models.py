@@ -13,16 +13,21 @@ class Address(models.Model):
         number (PositiveIntegerField): Numero of street
         street (CharField): Street name.
         city (CharField): City name.
-        state (CharField): Code of state : 2 characteres max (pex. "NY" for New York).
+        state (CharField): Code of state : 2 characteres max
+        (ex. "NY" for New York).
+
         zip_code (PositiveIntegerField): Postal code.
-        country_iso_code (CharField): ISO code of country 2 characteres max( ex. "USA").
+
+        country_iso_code (CharField): ISO code of country.
+        2 characteres max( ex. "USA").
 
     Meta:
         verbose_name = "Address"
         verbose_name_plural = "Addresses"
 
     Methods:
-        __str__(): Returns a string representation of the address (number and street).
+        __str__(): Returns a string representation of the address
+        (number and street).
 
     Returns:
         str:  a string representation of the address.
@@ -42,7 +47,8 @@ class Address(models.Model):
     def __str__(self) -> str:
         """Returns a string representation of the Address object.
 
-        The string representation is formatted as 'number street', for example, '123 Main St'.
+        The string representation is formatted as 'number street',
+        for example, '123 Main St'.
 
         Returns:
             str: A string representing the Address('number street').
@@ -55,10 +61,12 @@ class Letting(models.Model):
 
     Attributes:
         title (CharField): The title or name of the letting.
-        address (OneToOneField): The instance of Address associated with the letting.
+        address (OneToOneField): The instance of Address associated
+        with the letting.
 
     Methods:
-        __str__(): Returns a string representation of the letting (its title).
+        __str__(): Returns a string representation
+        of the letting(its title).
 
     Returns:
         str: A string representing the letting.

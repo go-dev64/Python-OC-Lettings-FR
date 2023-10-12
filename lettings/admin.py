@@ -1,4 +1,5 @@
-# Admin module for managing Letting and Address models in the Django admin interface.
+# Admin module for managing Letting and
+# Address models in the Django admin interface.
 
 
 from django.contrib import admin
