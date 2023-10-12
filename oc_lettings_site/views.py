@@ -38,10 +38,10 @@ def handler404(request: HttpRequest, exception: Exception) -> HttpResponse:
     Returns:
         HttpResponse:  return 404.html template.
     """
-    return render(request, "404.html")
+    return render(request, "404.html", status=404)
 
 
-def handler500(request: HttpRequest) -> HttpResponse:
+def error500(request: HttpRequest) -> HttpResponse:
     """The function is used to return a customized
     500 Server Internal error page.
 
@@ -52,4 +52,4 @@ def handler500(request: HttpRequest) -> HttpResponse:
     Returns:
         HttpResponse:  return 500.html template.
     """
-    return render(request, "500.html")
+    return render(request, "500.html", status=500)
