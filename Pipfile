@@ -12,6 +12,7 @@ coverage = "*"
 pytest-cov = "*"
 requests-mock = "*"
 pytest-mock = "*"
+django-environ = "*"
 
 [dev-packages]
 
