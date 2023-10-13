@@ -1,3 +1,4 @@
+# Module of urls of profiles app. It define the url of each views.
 from django.urls import path
 
 from . import views
