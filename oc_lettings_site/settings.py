@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 import environ
 import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 env = environ.Env()
 environ.Env.read_env()
@@ -16,6 +17,14 @@ sentry_sdk.init(
     # of sampled transactions.
     # We recommend adjusting this value in production.
     profiles_sample_rate=1.0,
+    integrations=[
+        DjangoIntegration(
+            transaction_style="url",
+            middleware_spans=True,
+            signals_spans=False,
+            cache_spans=False,
+        ),
+    ],
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)

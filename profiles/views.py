@@ -5,6 +5,7 @@
 # for the corresponding views.
 
 
+import logging
 from django.shortcuts import render
 from profiles.models import Profile
 
@@ -26,9 +27,13 @@ def index(request):
         HttpResponse: A rendered HTML response displaying
         the list of profiles.
     """
-    profiles_list = Profile.objects.all()
-    context = {"profiles_list": profiles_list}
-    return render(request, "profiles/index.html", context)
+    try:
+        profiles_list = Profile.objects.all()
+    except Exception as e:
+        logging.exception(e)
+    else:
+        context = {"profiles_list": profiles_list}
+        return render(request, "profiles/index.html", context)
 
 
 # Aliquam sed metus eget nisi tincidunt ornare accumsan
@@ -53,6 +58,10 @@ def profile(request, username):
         HttpResponse: A rendered HTML response displaying
         the specific profile.
     """
-    profile = Profile.objects.get(user__username=username)
-    context = {"profile": profile}
-    return render(request, "profiles/profile.html", context)
+    try:
+        profile = Profile.objects.get(user__username=username)
+    except Exception as e:
+        logging.exception(e)
+    else:
+        context = {"profile": profile}
+        return render(request, "profiles/profile.html", context)

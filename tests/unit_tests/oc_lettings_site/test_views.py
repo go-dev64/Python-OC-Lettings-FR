@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from pytest_django.asserts import assertTemplateUsed
 
+
 client = Client()
 
 
@@ -20,6 +21,6 @@ def test_index_views():
 
 def test_404_error_view():
     """Testing if, with a not found request, 404.html is rendered."""
-    response = client.get("fvqdrgd")
+    response = client.get("test_error_404")
     assert response.status_code == 404
     assertTemplateUsed(response, "404.html")
