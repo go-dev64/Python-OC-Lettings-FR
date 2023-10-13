@@ -1,12 +1,11 @@
 import os
+
+from pathlib import Path
 import environ
+import sentry_sdk
 
 env = environ.Env()
 environ.Env.read_env()
-
-from pathlib import Path
-
-import sentry_sdk
 
 sentry_sdk.init(
     dsn=env("SENTRY_DNS"),
