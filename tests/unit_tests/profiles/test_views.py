@@ -1,7 +1,7 @@
 """Module of testing views.py of Profile app """
 
 from django.test import Client
-from django.urls import reverse
+from django.urls import reverse, resolve
 
 import pytest
 from pytest_django.asserts import assertTemplateUsed
@@ -12,6 +12,15 @@ client = Client()
 
 
 class TestView:
+    """This class contains unit tests for the views
+    in the 'profiles' app.
+
+    These tests check if the views are rendering the
+    correct templates and
+    returning the expected HTTP status codes.
+    The returned contex will also be chexked.
+    """
+
     def _create_profile(self, username):
         user = User.objects.create(username=username, password="toto")
         profile = Profile.objects.create(user=user)
@@ -51,6 +60,7 @@ class TestView:
         assertTemplateUsed(response, "profiles/profile.html")
         context = response.context
         assert context["profile"] == profile_1
+
         response_2 = client.get(reverse("profile", args=["test_profile2"]))
         context_2 = response_2.context
         assert context_2["profile"] == profile_2

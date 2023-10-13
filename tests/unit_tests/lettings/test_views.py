@@ -13,6 +13,14 @@ client = Client()
 
 class TestView:
     def _create_addres(self, number, street):
+        """This class contains unit tests for the views
+        in the 'lettings' app.
+
+        These tests check if the views are rendering the
+        correct templates and
+        returning the expected HTTP status codes.
+        The returned contex will also be chexked.
+        """
         address = Address.objects.create(
             number=number,
             street=street,
