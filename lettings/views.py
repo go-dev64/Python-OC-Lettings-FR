@@ -6,8 +6,8 @@
 
 
 import logging
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.http import Http404, HttpRequest, HttpResponse
+from django.shortcuts import render, redirect
 from lettings.models import Letting
 
 
@@ -32,6 +32,7 @@ def index(request: HttpRequest) -> HttpResponse:
         lettings_list = Letting.objects.all()
     except Exception as e:
         logging.exception(e)
+        return render(request, "404.html", status=400)
     else:
         context = {"lettings_list": lettings_list}
         return render(request, "lettings/index.html", context)
@@ -70,8 +71,11 @@ def letting(request: HttpRequest, letting_id: int) -> HttpResponse:
     """
     try:
         letting = Letting.objects.get(id=letting_id)
+    except Letting.DoesNotExist:
+        raise Http404
     except Exception as e:
         logging.exception(e)
+        return render(request, "500.html", context={"error": e}, status=400)
 
     else:
         context = {

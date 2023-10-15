@@ -6,6 +6,7 @@
 
 
 import logging
+from django.http import Http404
 from django.shortcuts import render
 from profiles.models import Profile
 
@@ -31,6 +32,7 @@ def index(request):
         profiles_list = Profile.objects.all()
     except Exception as e:
         logging.exception(e)
+        return render(request, "500.html", status=400)
     else:
         context = {"profiles_list": profiles_list}
         return render(request, "profiles/index.html", context)
@@ -60,8 +62,12 @@ def profile(request, username):
     """
     try:
         profile = Profile.objects.get(user__username=username)
+    except Profile.DoesNotExist:
+        raise Http404
     except Exception as e:
         logging.exception(e)
+        return render(request, "500.html", context={"error": e}, status=400)
+
     else:
         context = {"profile": profile}
         return render(request, "profiles/profile.html", context)

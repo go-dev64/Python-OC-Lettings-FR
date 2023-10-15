@@ -8,7 +8,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 env = environ.Env()
 environ.Env.read_env()
 
-sentry_sdk.init(
+"""sentry_sdk.init(
     dsn=env("SENTRY_DNS"),
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.
@@ -25,7 +25,7 @@ sentry_sdk.init(
             cache_spans=False,
         ),
     ],
-)
+)"""
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
