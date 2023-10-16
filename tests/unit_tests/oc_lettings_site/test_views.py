@@ -1,6 +1,5 @@
 """Module of testing views .py of oc_lettings_site app """
 
-from django.http import HttpResponseServerError
 from django.test import Client
 from django.urls import reverse
 

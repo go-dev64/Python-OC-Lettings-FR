@@ -1,6 +1,6 @@
 """Module of testing views .py of lettings app """
 
-from django.test import Client, RequestFactory
+from django.test import Client
 from django.urls import reverse
 
 import pytest

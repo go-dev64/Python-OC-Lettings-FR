@@ -76,7 +76,7 @@ class TestView:
         We Testing if "error.html" template is rendered,
         """
         address = self._create_addres(number=41, street="street_test")
-        letting = self._create_letting(address=address, title="a title leting")
+        self._create_letting(address=address, title="a title leting")
         response = client.get(reverse("letting", args=[2]))
         assert response.status_code == 404
         assertTemplateUsed(response, "error_page.html")

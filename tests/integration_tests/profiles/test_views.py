@@ -1,7 +1,7 @@
 """Module of testing views.py of Profile app """
 
 from django.test import Client
-from django.urls import reverse, resolve
+from django.urls import reverse
 
 import pytest
 from pytest_django.asserts import assertTemplateUsed
@@ -66,7 +66,7 @@ class TestView:
         assert context_2["profile"] == profile_2
 
     @pytest.mark.django_db
-    def test_letting_views(self):
+    def test_letting_views_with_bad_args(self):
         """Testing if profile is rendered properly by checking
         200 status code.
         We Testing if "profiles/profile.html" template is rendered,

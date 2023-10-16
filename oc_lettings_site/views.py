@@ -1,4 +1,3 @@
-import logging
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from sentry_sdk import capture_message

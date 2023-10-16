@@ -1,7 +1,7 @@
 """Module of testing views.py of Profile app """
 
 from django.test import Client
-from django.urls import reverse, resolve
+from django.urls import reverse
 
 import pytest
 from pytest_django.asserts import assertTemplateUsed
