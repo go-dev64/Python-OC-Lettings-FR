@@ -5,8 +5,9 @@
 # for the corresponding views.
 
 
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+import logging
+from django.http import Http404, HttpRequest, HttpResponse
+from django.shortcuts import render, redirect
 from lettings.models import Letting
 
 
@@ -27,9 +28,14 @@ def index(request: HttpRequest) -> HttpResponse:
     Returns:
         HttpResponse: A rendered HTML response displaying the list of lettings.
     """
-    lettings_list = Letting.objects.all()
-    context = {"lettings_list": lettings_list}
-    return render(request, "lettings/index.html", context)
+    try:
+        lettings_list = Letting.objects.all()
+    except Exception as e:
+        logging.exception(e)
+        return render(request, "error_page.html", context={"error": e}, status=400)
+    else:
+        context = {"lettings_list": lettings_list}
+        return render(request, "lettings/index.html", context)
 
 
 # Cras ultricies dignissim purus, vitae hendrerit ex varius non.
@@ -63,9 +69,17 @@ def letting(request: HttpRequest, letting_id: int) -> HttpResponse:
         HttpResponse: A rendered HTML response displaying
         the specific letting.
     """
-    letting = Letting.objects.get(id=letting_id)
-    context = {
-        "title": letting.title,
-        "address": letting.address,
-    }
-    return render(request, "lettings/letting.html", context)
+    try:
+        letting = Letting.objects.get(id=letting_id)
+    except Letting.DoesNotExist:
+        raise Http404
+    except Exception as e:
+        logging.exception(e)
+        return render(request, "error_page.html", context={"error": e}, status=400)
+
+    else:
+        context = {
+            "title": letting.title,
+            "address": letting.address,
+        }
+        return render(request, "lettings/letting.html", context)

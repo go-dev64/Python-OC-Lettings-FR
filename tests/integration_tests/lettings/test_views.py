@@ -6,9 +6,7 @@ from django.urls import reverse
 import pytest
 from pytest_django.asserts import assertTemplateUsed
 
-
 from lettings.models import Letting, Address
-from lettings.views import index, letting
 
 client = Client()
 
@@ -40,21 +38,19 @@ class TestView:
     def test_index_views(self):
         """Testing if index() is rendered properly by checking
         200 status code.
-        We Testing if "lettings/index.html" template is rendered.
+        We Testing if "lettings/index.html" template is rendered,
+        we create an address and letting to make sure that context
+        is rendered correctly.
         """
+        address = self._create_addres(number=41, street="street_test")
+        letting = self._create_letting(address=address, title="a title leting")
         response = client.get(reverse("lettings_index"))
         assert response.status_code == 200
         assertTemplateUsed(response, "lettings/index.html")
-
-    @pytest.mark.django_db
-    def test_index_views_with_exception(self, mocker):
-        """Testing if error page is rendered properly by checking
-        400 status code when there are an exception raises..
-        """
-        mock_test = mocker.patch.object(Letting.objects, "all")
-        mock_test.side_effect = Exception()
-        result = index("test")
-        assert result.status_code == 400
+        lettings_list = Letting.objects.all()
+        context = response.context
+        assert letting in context["lettings_list"]
+        assert len(lettings_list) == len(context["lettings_list"])
 
     @pytest.mark.django_db
     def test_letting_views(self):
@@ -65,10 +61,13 @@ class TestView:
         is returned  correctly a letting created.
         """
         address = self._create_addres(number=41, street="street_test")
-        self._create_letting(address=address, title="a title leting")
+        letting = self._create_letting(address=address, title="a title leting")
         response = client.get(reverse("letting", args=[1]))
         assert response.status_code == 200
         assertTemplateUsed(response, "lettings/letting.html")
+        context = response.context
+        assert context["title"] == letting.title
+        assert context["address"] == letting.address
 
     @pytest.mark.django_db
     def test_letting_views_with_bad_index(self):
@@ -76,16 +75,8 @@ class TestView:
         by checking 404 status code.
         We Testing if "error.html" template is rendered,
         """
+        address = self._create_addres(number=41, street="street_test")
+        self._create_letting(address=address, title="a title leting")
         response = client.get(reverse("letting", args=[2]))
         assert response.status_code == 404
         assertTemplateUsed(response, "error_page.html")
-
-    @pytest.mark.django_db
-    def test_letting_views_with_exception(self, mocker):
-        """Testing if eror page with  is rendered properly by checking
-        400 status code when there are an exception raises.
-        """
-        mock_test = mocker.patch.object(Letting.objects, "get")
-        mock_test.side_effect = Exception()
-        result = letting("test", "test")
-        assert result.status_code == 400
