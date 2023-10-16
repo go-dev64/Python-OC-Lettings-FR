@@ -32,7 +32,7 @@ def index(request: HttpRequest) -> HttpResponse:
         lettings_list = Letting.objects.all()
     except Exception as e:
         logging.exception(e)
-        return render(request, "404.html", status=400)
+        return render(request, "error_page.html", context={"error": e}, status=400)
     else:
         context = {"lettings_list": lettings_list}
         return render(request, "lettings/index.html", context)
@@ -75,7 +75,7 @@ def letting(request: HttpRequest, letting_id: int) -> HttpResponse:
         raise Http404
     except Exception as e:
         logging.exception(e)
-        return render(request, "500.html", context={"error": e}, status=400)
+        return render(request, "error_page.html", context={"error": e}, status=400)
 
     else:
         context = {

@@ -69,7 +69,7 @@ class TestView:
         """
         response = client.get(reverse("profile", args=[2]))
         assert response.status_code == 404
-        assertTemplateUsed(response, "404.html")
+        assertTemplateUsed(response, "error_page.html")
 
     @pytest.mark.django_db
     def test_profile_views_with_exception(self, mocker):

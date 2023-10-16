@@ -1,5 +1,6 @@
 """Module of testing views .py of oc_lettings_site app """
 
+from django.http import HttpResponseServerError
 from django.test import Client
 from django.urls import reverse
 
@@ -23,4 +24,4 @@ def test_404_error_view():
     """Testing if, with a not found request, 404.html is rendered."""
     response = client.get("test_error_404")
     assert response.status_code == 404
-    assertTemplateUsed(response, "404.html")
+    assertTemplateUsed(response, "error_page.html")

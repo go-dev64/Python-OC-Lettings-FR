@@ -64,3 +64,17 @@ class TestView:
         response_2 = client.get(reverse("profile", args=["test_profile2"]))
         context_2 = response_2.context
         assert context_2["profile"] == profile_2
+
+    @pytest.mark.django_db
+    def test_letting_views(self):
+        """Testing if profile is rendered properly by checking
+        200 status code.
+        We Testing if "profiles/profile.html" template is rendered,
+        we create  profiles to make sure that context is returned
+        correctly a profiles created.
+        """
+        self._create_profile(username="test_profile")
+        self._create_profile(username="test_profile2")
+        response = client.get(reverse("profile", args=["toto"]))
+        assert response.status_code == 404
+        assertTemplateUsed(response, "error_page.html")

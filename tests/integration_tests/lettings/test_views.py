@@ -79,4 +79,4 @@ class TestView:
         letting = self._create_letting(address=address, title="a title leting")
         response = client.get(reverse("letting", args=[2]))
         assert response.status_code == 404
-        assertTemplateUsed(response, "404.html")
+        assertTemplateUsed(response, "error_page.html")
