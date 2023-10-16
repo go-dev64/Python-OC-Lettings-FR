@@ -13,6 +13,7 @@ pytest-cov = "*"
 requests-mock = "*"
 pytest-mock = "*"
 django-environ = "*"
+sentry-sdk = {extras = ["django"], version = "*"}
 
 [dev-packages]
 

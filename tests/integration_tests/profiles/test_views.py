@@ -7,7 +7,6 @@ import pytest
 from pytest_django.asserts import assertTemplateUsed
 
 from profiles.models import Profile, User
-from profiles.views import index, profile
 
 client = Client()
 
@@ -31,52 +30,51 @@ class TestView:
     def test_index_views(self):
         """Testing if index() is rendered properly by checking
         200 status code.
-        We Testing if "profiles/index.html" template is rendered.
+        We Testing if "profiles/index.html" template is rendered,
+        we create Profiles to make sure that context is rendered
+        correctly.
         """
+        profile_1 = self._create_profile(username="test_profile")
+        profile_2 = self._create_profile(username="test_profile2")
         response = client.get(reverse("profiles_index"))
         assert response.status_code == 200
         assertTemplateUsed(response, "profiles/index.html")
+        profiles_list = Profile.objects.all()
+        context = response.context
+        assert profile_1 in context["profiles_list"]
+        assert profile_2 in context["profiles_list"]
+        assert len(profiles_list) == len(context["profiles_list"])
 
     @pytest.mark.django_db
-    def test_index_views_with_exception(self, mocker):
-        """Testing if error page is rendered properly by checking
-        400 status code when there are an exception raises.
-        """
-        mock_test = mocker.patch.object(Profile.objects, "all")
-        mock_test.side_effect = Exception()
-        result = index("test")
-        assert result.status_code == 400
-
-    @pytest.mark.django_db
-    def test_profile_views(self, mocker):
+    def test_letting_views(self):
         """Testing if profile is rendered properly by checking
         200 status code.
         We Testing if "profiles/profile.html" template is rendered,
         we create  profiles to make sure that context is returned
         correctly a profiles created.
         """
-        mock_test = mocker.patch.object(Profile.objects, "get")
-        mock_test.side_effect = ["test_profile", "toto"]
+        profile_1 = self._create_profile(username="test_profile")
+        profile_2 = self._create_profile(username="test_profile2")
         response = client.get(reverse("profile", args=["test_profile"]))
         assert response.status_code == 200
         assertTemplateUsed(response, "profiles/profile.html")
+        context = response.context
+        assert context["profile"] == profile_1
+
+        response_2 = client.get(reverse("profile", args=["test_profile2"]))
+        context_2 = response_2.context
+        assert context_2["profile"] == profile_2
 
     @pytest.mark.django_db
-    def test_profile_views_with_bad_index(self):
-        """Testing if error page with bad index is rendered properly
-        by checking 404 status code.
-        We Testing if "error.html" template is rendered,
+    def test_letting_views_with_bad_args(self):
+        """Testing if profile is rendered properly by checking
+        200 status code.
+        We Testing if "profiles/profile.html" template is rendered,
+        we create  profiles to make sure that context is returned
+        correctly a profiles created.
         """
-        response = client.get(reverse("profile", args=[2]))
+        self._create_profile(username="test_profile")
+        self._create_profile(username="test_profile2")
+        response = client.get(reverse("profile", args=["toto"]))
         assert response.status_code == 404
         assertTemplateUsed(response, "error_page.html")
-
-    @pytest.mark.django_db
-    def test_profile_views_with_exception(self, mocker):
-        """Testing if eror page with  is rendered properly by checking
-        400 status code when there are an exception raises.
-        """
-        mock_test = mocker.patch.object(Profile.objects, "get")
-        mock_test.side_effect = Exception()
-        result = profile("test", "test")
-        assert result.status_code == 400
