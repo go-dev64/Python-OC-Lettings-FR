@@ -6,7 +6,7 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 env = environ.Env()
-environ.Env.read_env()
+
 
 """sentry_sdk.init(
     dsn=env("SENTRY_DNS"),
@@ -29,6 +29,7 @@ environ.Env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(".env"))
 
 
 # Quick-start development settings - unsuitable for production
