@@ -38,13 +38,12 @@ jobs:
   docker_image:
     docker:
       - image: cimg/base:2022.06
-    ressource_class: xlarge
+  
     steps:
       - setup_remote_docker:
           version: 20.10.14
           docker_layer_caching: true
 
-      # Install via apk on alpine based images
       - run:
           name: Install Docker client
           command: apk add docker-cli
@@ -53,29 +52,22 @@ jobs:
           name: Set Docker Image Tag
           command: echo TAG=0.1.$CIRCLE_BUILD_NUM
 
-        # build docker image with docker compos. rename tag with commit hash.
+      # build docker image with docker compos. rename tag with commit hash.
       - run:
           name: Build Docker image
           command: |
             docker compose build
             docker tag godev64/oc_lettings:latest godev64/oc_lettings:$TAG
 
-        # Push image to docker HUB
-        - run:
-            name: Push Docker image
-            command: |
+      # Push image to docker HUB
+      - run:
+          name: Push Docker image
+          command: |
               docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
               docker push python-oc-lettings-fr-django:$TAG
 
 
 
-  deploy: # this can be any name you choose
-    executor: python/default
-    steps:
-      - attach_workspace:
-          at: ~/project
-      - heroku/deploy-via-git:
-          force: true # force push when pushing to the heroku remote, see: https://devcenter.heroku.com/articles/git
 
 workflows:
   test_my_app:
