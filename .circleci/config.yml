@@ -34,7 +34,7 @@ jobs:
           root: ~/project
           paths:
             - . 
-
+jobs:
   docker_image:
     executor:
       steps:
@@ -58,7 +58,7 @@ jobs:
             docker push python-oc-lettings-fr-django:$TAG
 
 
-
+jobs:
   deploy: # this can be any name you choose
     executor: python/default
     steps:
