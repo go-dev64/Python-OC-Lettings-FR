@@ -12,11 +12,12 @@ jobs:
           pkg-manager: pipenv
       - run:
           name: Check with Flake8
-          command: flake8   # Run Flake8 to check your code
+          command: |
+            pipenv shell
+            flake8   # Run Flake8 to check your code
       - run:
           name: Run tests
           command: |
-            pipenv shell
             mkdir test-results
             pytest --junitxml=test-results/junit.xml
 
