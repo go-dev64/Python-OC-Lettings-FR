@@ -53,7 +53,7 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t godev64:$TAG
+            docker build -t $DOCKERHUB_USERNAME:$TAG .
 
       # Push image to docker HUB
       - run:
