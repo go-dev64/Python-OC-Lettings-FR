@@ -38,7 +38,7 @@ jobs:
   docker_image:
     docker:
       - image: cimg/base:2022.06
-    ressource_class: xlarge
+      ressource_class: xlarge
       steps:
         - setup_remote_docker:
           version: 20.10.14
@@ -49,7 +49,6 @@ jobs:
             name: Install Docker client
             command: apk add docker-cli
 
-    
         - run:
             name: Set Docker Image Tag
             command: echo TAG=0.1.$CIRCLE_BUILD_NUM
