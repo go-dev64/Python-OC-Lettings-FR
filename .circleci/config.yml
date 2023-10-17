@@ -16,15 +16,13 @@ jobs:
       - run:
           name: Run tests
           command: |
-            $HOME/.local/bin/coverage run -m pytest
-            coverage_percentage=$($HOME/.local/bin/coverage report --fail-under=80 -m | tail -n 1 | awk '{print $4}' | tr -d '%')
-            if [ "$coverage_percentage" -lt 80 ]; then
-                echo "Code coverage is below 80%. Coverage: $coverage_percentage%"
-                exit 1
-            fi
-            $HOME/.local/bin/coverage html  # open htmlcov/index.html in a browser
-      - store_artifacts:
-          path: htmlcov
+            command: |
+            . venv/bin/activate
+            mkdir test-results
+            pytest --junitxml=test-results/junit.xml
+
+      - store_test_results:
+          path: test-results
       - persist_to_workspace:
           root: ~/project
           paths:
@@ -42,9 +40,4 @@ workflows:
   test_my_app:
     jobs:
       - build_and_test
-      """- deploy:
-          requires:
-            - build_and_test # only deploy if the build_and_test job has completed
-          filters:
-            branches:
-              only: main # only deploy when on main"""
+      

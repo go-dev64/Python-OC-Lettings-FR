@@ -7,7 +7,7 @@
 
 import logging
 from django.http import Http404, HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from lettings.models import Letting
 
 
