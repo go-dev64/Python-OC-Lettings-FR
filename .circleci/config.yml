@@ -44,9 +44,6 @@ jobs:
           version: 20.10.14
           docker_layer_caching: true
 
-      - run:
-          name: Install Docker client
-          command: apk add docker-cli
           
       - run:
           name: Set Docker Image Tag
