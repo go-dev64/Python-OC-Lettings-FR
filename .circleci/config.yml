@@ -38,27 +38,27 @@ jobs:
   docker_image:
     docker:
       - image: cimg/base:2022.06
-      ressource_class: xlarge
-      steps:
-        - setup_remote_docker:
+    ressource_class: xlarge
+    steps:
+      - setup_remote_docker:
           version: 20.10.14
           docker_layer_caching: true
 
-        # Install via apk on alpine based images
-        - run:
-            name: Install Docker client
-            command: apk add docker-cli
+      # Install via apk on alpine based images
+      - run:
+          name: Install Docker client
+          command: apk add docker-cli
+          
+      - run:
+          name: Set Docker Image Tag
+          command: echo TAG=0.1.$CIRCLE_BUILD_NUM
 
-        - run:
-            name: Set Docker Image Tag
-            command: echo TAG=0.1.$CIRCLE_BUILD_NUM
-
-          # build docker image with docker compos. rename tag with commit hash.
-        - run:
-            name: Build Docker image
-            command: |
-              docker compose build
-              docker tag godev64/oc_lettings:latest godev64/oc_lettings:$TAG
+        # build docker image with docker compos. rename tag with commit hash.
+      - run:
+          name: Build Docker image
+          command: |
+            docker compose build
+            docker tag godev64/oc_lettings:latest godev64/oc_lettings:$TAG
 
         # Push image to docker HUB
         - run:
