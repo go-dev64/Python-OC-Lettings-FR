@@ -9,15 +9,14 @@ jobs:
     steps:
       - checkout # move on main branch
       - python/install-packages: # install all packages
-          pkg-manager: pip
+          pkg-manager: pipenv
       - run:
           name: Check with Flake8
           command: flake8   # Run Flake8 to check your code
       - run:
           name: Run tests
           command: |
-            command: |
-            . venv/bin/activate
+            pipenv shell
             mkdir test-results
             pytest --junitxml=test-results/junit.xml
 
