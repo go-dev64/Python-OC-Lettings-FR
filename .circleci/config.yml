@@ -36,7 +36,7 @@ jobs:
             - . 
 
   docker_image:
-    executor:
+    executor: python/default
       steps:
         # Utilisez $CIRCLE_SHA1 pour obtenir le hachage du commit.
       - run:
