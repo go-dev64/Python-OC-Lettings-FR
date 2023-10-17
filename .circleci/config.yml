@@ -22,9 +22,9 @@ jobs:
           name: Run tests
           command: |
             coverage run -m pytest
-            coverage_percentage=$(coverage report --fail-under=80 -m | tail -n 1 | awk '{print $4}' | tr -d '%')
-            if [ "$coverage_percentage" -lt 80 ]; then
-                echo "Code coverage is below 80%. Coverage: $coverage_percentage%"
+            coverage_percentage=$(coverage report --fail-under=100 -m | tail -n 1 | awk '{print $4}' | tr -d '%')
+            if [ "$coverage_percentage" -lt 100 ]; then
+                echo "Code coverage is below 100%. Coverage: $coverage_percentage%"
                 exit 1
             fi
             coverage html  # open htmlcov/index.html in a browser
