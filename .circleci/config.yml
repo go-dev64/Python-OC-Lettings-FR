@@ -36,26 +36,37 @@ jobs:
             - . 
 
   docker_image:
-    executor: python/default
-    steps:
-      # Utilisez $CIRCLE_SHA1 pour obtenir le hachage du commit.
-      - run:
-          name: Set Docker Image Tag
-          command: echo TAG=0.1.$CIRCLE_BUILD_NUM
+    docker:
+      - image: cimg/base:2022.06
+    ressource_class: xlarge
+      steps:
+        - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
 
-        # build docker image with docker compos. rename tag with commit hash.
-      - run:
-          name: Build Docker image
-          command: |
-            docker compose build
-            docker tag godev64/oc_lettings:latest godev64/oc_lettings:$TAG
+        # Install via apk on alpine based images
+        - run:
+            name: Install Docker client
+            command: apk add docker-cli
 
-      # Push image to docker HUB
-      - run:
-          name: Push Docker image
-          command: |
-            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-            docker push python-oc-lettings-fr-django:$TAG
+    
+        - run:
+            name: Set Docker Image Tag
+            command: echo TAG=0.1.$CIRCLE_BUILD_NUM
+
+          # build docker image with docker compos. rename tag with commit hash.
+        - run:
+            name: Build Docker image
+            command: |
+              docker compose build
+              docker tag godev64/oc_lettings:latest godev64/oc_lettings:$TAG
+
+        # Push image to docker HUB
+        - run:
+            name: Push Docker image
+            command: |
+              docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+              docker push python-oc-lettings-fr-django:$TAG
 
 
 
