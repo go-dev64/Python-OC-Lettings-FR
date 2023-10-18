@@ -41,32 +41,25 @@ jobs:
       - setup_remote_docker:
           version: 20.10.14
           docker_layer_caching: true
-      - run:
-          name: Set Docker Image Tag
-          command: |
-            echo TAG=0.1.$CIRCLE_BUILD_NUM
-            
 
       # build docker image with docker compos. rename tag with commit hash.
       - run:
           name: Build images 
           command: |
             docker build -t oc_lettings --build-arg SECRET_KEY_DJANGO=$SECRET_KEY_DJANGO --build-arg SENTRY_DNS=$SENTRY_DNS .
-            docker tag oc_lettings:latest godev64/oc_lettings:0.1.$CIRCLE_BUILD_NUM
+            docker tag oc_lettings:latest godev64/oc_lettings:CIRCLE_SHA1
               
-
       # Push image to docker 
       - run:
           name: Push Docker image
           command: |
               echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-              docker push godev64/oc_lettings:0.1.$CIRCLE_BUILD_NUM
+              docker push godev64/oc_lettings:CIRCLE_SHA1
 
-
-
+      
 
 workflows:
-  test_my_app:
+  oc_lettings_site:
     jobs:
       - build_and_test
       - build-docker-image
