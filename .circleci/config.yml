@@ -55,7 +55,7 @@ jobs:
       - run:
           name: Build images 
           command: |
-              docker build -t oc_lettings --build-arg SECRET_KEY_DJANGO=${SECRET_KEY_DJANGO} --build-arg SENTRY_DNS=${SENTRY_DNS} .
+              docker build -t oc_lettings --build-arg SECRET_KEY_DJANGO=SECRET_KEY_DJANGO --build-arg SENTRY_DNS=SENTRY_DNS .
               
 
       # Push image to docker HUB
