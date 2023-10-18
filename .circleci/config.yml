@@ -42,15 +42,6 @@ jobs:
     executor: python/default
     steps:
       - run:
-          name: Install Docker Compose
-          environment:
-            COMPOSE_VERSION: '1.29.2'
-          command: |
-            curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
-
-      - run:
           name: Set Docker Image Tag
           command: |
             TAG="0.1.$CIRCLE_BUILD_NUM"
@@ -59,7 +50,7 @@ jobs:
       - run:
           name: Build images of services declared in docker-compose.yml
           command: |
-              docker-compose build
+              docker compose -f docker-compose.yaml up -d
               docker tag godev64/oc_lettings:latest godev64/oc_lettings:$TAG
 
       # Push image to docker HUB
