@@ -63,7 +63,7 @@ jobs:
       - checkout
       - run:
           name: "Deploy"
-          command: curl-XGET "$RENDER_KEY"
+          command: curl -X GET "${RENDER_KEY}"
 
       
 
