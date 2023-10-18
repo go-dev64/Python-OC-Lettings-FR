@@ -1,16 +1,15 @@
 version: 2.1
-orbs:
-  python: circleci/python@2.1.1
-  # heroku: circleci/heroku@1.2.6
 
 jobs:
-  build_and_test: # this can be any name you choose
+  build_and_test: 
+    docker:
+     - image: cimg/python:3.10
     executor: python/default
     steps:
-      - checkout # move on main branch
       - setup_remote_docker:
           version: 20.10.14
           docker_layer_caching: true
+      - checkout # move on main branch
       - python/install-packages: # install all packages
           pkg-manager: pip
       - run:
