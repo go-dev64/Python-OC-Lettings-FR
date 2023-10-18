@@ -47,7 +47,7 @@ jobs:
           name: Build images 
           command: |
             docker build -t oc_lettings --build-arg SECRET_KEY_DJANGO=$SECRET_KEY_DJANGO --build-arg SENTRY_DNS=$SENTRY_DNS .
-            docker tag oc_lettings:latest godev64/oc_lettings:CIRCLE_SHA1
+            docker tag oc_lettings:latest godev64/oc_lettings:$CIRCLE_SHA1
               
       # Push image to docker 
       - run:
