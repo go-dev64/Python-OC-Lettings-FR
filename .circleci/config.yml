@@ -45,6 +45,8 @@ jobs:
           name: Set Docker Image Tag
           command: |
             echo TAG=0.1.$CIRCLE_BUILD_NUM
+            echo $SECRET_KEY_DJANGO # this env var must be set within the project
+            echo $SENTRY_DNS # this env var must be set within the project
 
       # build docker image with docker compos. rename tag with commit hash.
       - run:
