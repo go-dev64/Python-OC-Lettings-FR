@@ -36,6 +36,9 @@ jobs:
   build-docker-image:
     docker:
       - image: cimg/python:3.10
+    environment:
+      SECRET_KEY_DJANGO: $SECRET_KEY_DJANGO
+      SENTRY_DNS: $SENTRY_DNS
     steps:
       - checkout
       - setup_remote_docker:

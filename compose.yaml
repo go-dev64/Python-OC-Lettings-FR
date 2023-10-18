@@ -20,4 +20,14 @@ services:
       - SECRET_KEY_DJANGO
       - SENTRY_DNS
 
+        
+    # If your application exposes a port, uncomment the following lines and change
+    # the port numbers as needed. The first number is the host port and the second
+    # is the port inside the container.
+     
 
+secrets:
+  SECRET_KEY_DJANGO:
+    file: .env
+  SENTRY_DNS:
+    file: .env
