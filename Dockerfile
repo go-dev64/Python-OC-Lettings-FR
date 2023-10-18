@@ -42,6 +42,13 @@ RUN pip install -r requirements.txt
 # copy project
 COPY . /app
 
+ARG SECRET_KEY_DJANGO
+ARG SENTRY_DNS
+ARG env
+ENV SECRET_KEY_DJANGO=$SECRET_KEY_DJANGO
+ENV SENTRY_DNS=$SENTRY_DNS
+ENV ENV = $env
+
 RUN python manage.py collectstatic --noinput
 
 # Exposez le port sur lequel Django écoute

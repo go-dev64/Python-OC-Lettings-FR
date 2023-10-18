@@ -34,11 +34,17 @@ jobs:
             coverage html  # open htmlcov/index.html in a browser
       - store_artifacts:
           path: htmlcov
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - . 
  
 
   docker_image:
     executor: python/default
     steps:
+      - attach_workspace:
+          at: ~/project
       - run:
           name: Set Docker Image Tag
           command: |
@@ -48,7 +54,7 @@ jobs:
       - run:
           name: Build images of services declared in compose.yaml
           command: |
-              docker build -t oc_lettings .
+              docker build -t oc-lettings --build-arg django_key=${django_key} --build-arg env=${env} .
               docker tag godev64/oc_lettings:latest godev64/oc_lettings:0.1.$CIRCLE_BUILD_NUM
 
       # Push image to docker HUB
