@@ -65,20 +65,16 @@ jobs:
           name: "Deploy"
           command: curl -X GET "${RENDER_KEY}"
 
-      
-
 workflows:
   oc_lettings_site:
     jobs: 
       - build_and_test
       - build-docker-image:
-        filters : 
-          branches :
-            only :
-              - master
           requires:
-            - build_and_test
-
+              - build_and_test
+          filters : 
+            branches :
+              only : master
       - deployment:
           requires:
             - build-docker-image
