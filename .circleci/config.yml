@@ -76,8 +76,8 @@ workflows:
           branches :
             only :
               - master
-        requires:
-          - build_and_test
+          requires:
+            - build_and_test
 
       - deployment:
           requires:
