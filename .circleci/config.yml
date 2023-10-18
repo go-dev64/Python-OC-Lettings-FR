@@ -52,7 +52,7 @@ jobs:
       - run:
           name: Build images 
           command: |
-              docker compose up
+              docker compose build
               docker tag godev64/oc_lettings:latest godev64/oc_lettings:0.1.$CIRCLE_BUILD_NUM
 
       # Push image to docker HUB
