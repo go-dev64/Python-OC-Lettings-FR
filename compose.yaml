@@ -1,0 +1,33 @@
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Docker compose reference guide at
+# https://docs.docker.com/compose/compose-file/
+
+# Here the instructions define your application as a service called "app".
+# This service is built from the Dockerfile in the current directory.
+# You can add other services your application may depend on here, such as a
+# database or a cache. For examples, see the Awesome Compose repository:
+# https://github.com/docker/awesome-compose
+services:
+  webapp:
+    image: godev64/oc_lettings
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      - SECRET_KEY_DJANGO=${SECRET_KEY_DJANGO}
+      - SENTRY_DNS=${SENTRY_DNS}
+    secrets:
+      - SECRET_KEY_DJANGO
+      - SENTRY_DNS
+
+        
+    # If your application exposes a port, uncomment the following lines and change
+    # the port numbers as needed. The first number is the host port and the second
+    # is the port inside the container.
+     
+
+secrets:
+  SECRET_KEY_DJANGO:
+    file: .env
+  SENTRY_DNS:
+    file: .env
