@@ -55,7 +55,7 @@ jobs:
             docker tag oc_lettings:latest godev64/oc_lettings:0.1.$CIRCLE_BUILD_NUM
               
 
-      # Push image to docker HUB
+      # Push image to docker 
       - run:
           name: Push Docker image
           command: |
