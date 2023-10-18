@@ -56,12 +56,23 @@ jobs:
               echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
               docker push godev64/oc_lettings:CIRCLE_SHA1
 
+  deployment:
+   docker:
+    -image:cimg/base:stable
+   steps:
+    -checkout
+    -run:
+       name: "Deploy"
+       command:
+            curl-XGET(https://api.render.com/deploy/srv-cknu61ujmi5c73a0n920?key=k8fYtDRDmMA)
+
       
 
 workflows:
   oc_lettings_site:
-    jobs:
+    jobs: 
       - build_and_test
       - build-docker-image
+      - deployment
 
       
