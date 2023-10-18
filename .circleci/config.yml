@@ -50,7 +50,7 @@ jobs:
       - run:
           name: Build images 
           command: |
-              docker build -t godev64/oc_lettings .
+              docker compose build 
               docker tag godev64/oc_lettings:latest godev64/oc_lettings:0.1.$CIRCLE_BUILD_NUM
 
       # Push image to docker HUB
@@ -58,7 +58,7 @@ jobs:
           name: Push Docker image
           command: |
               docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-              docker push godev64/oc_lettings:$TAG
+              docker push godev64/oc_lettings:0.1.$CIRCLE_BUILD_NUM
 
 
 
