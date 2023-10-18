@@ -42,6 +42,7 @@ RUN pip install -r requirements.txt
 # copy project
 COPY . /app
 
+RUN python manage.py collectstatic --noinput
 
 # Exposez le port sur lequel Django écoute
 EXPOSE 8000

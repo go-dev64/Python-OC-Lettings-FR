@@ -8,6 +8,9 @@ jobs:
     executor: python/default
     steps:
       - checkout # move on main branch
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
       - python/install-packages: # install all packages
           pkg-manager: pip
       - run:
@@ -36,15 +39,8 @@ jobs:
             - . 
 
   docker_image:
-    docker:
-      - image: cimg/base:2022.06
-  
+    executor: python/default
     steps:
-      - setup_remote_docker:
-          version: 20.10.14
-          docker_layer_caching: true
-
-          
       - run:
           name: Set Docker Image Tag
           command: echo TAG=0.1.$CIRCLE_BUILD_NUM
