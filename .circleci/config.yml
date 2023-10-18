@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   python: circleci/python@2.1.1
-  
+
 jobs:
   build_and_test: 
     docker:
@@ -51,7 +51,7 @@ jobs:
       - run:
           name: Build images of services declared in compose.yaml
           command: |
-              docker compose -f $CIRCLE_WORKING_DIRECTORY/compose.yaml up -d
+              docker compose -f compose.yaml up -d
               docker tag godev64/oc_lettings:latest godev64/oc_lettings:$TAG
 
       # Push image to docker HUB
