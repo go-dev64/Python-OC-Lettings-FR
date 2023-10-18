@@ -43,20 +43,20 @@ jobs:
     steps:
       - run:
           name: Set Docker Image Tag
-          command: echo TAG=0.1.$CIRCLE_BUILD_NUM
+          command: echo $DOCKERHUB_USERNAME
 
       # build docker image with docker compos. rename tag with commit hash.
       - run:
           name: Build Docker image
           command: |
-            docker build -t godev64:$TAG .
+            docker build -t $DOCKERHUB_USERNAME:0.1.$CIRCLE_BUILD_NUM .
 
       # Push image to docker HUB
       - run:
           name: Push Docker image
           command: |
               docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-              docker push python-oc-lettings-fr-django:$TAG
+              docker push python-oc-lettings-fr-django:0.1.$CIRCLE_BUILD_NUM
 
 
 
