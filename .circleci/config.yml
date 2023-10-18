@@ -67,5 +67,6 @@ workflows:
   test_my_app:
     jobs:
       - build_and_test
-      - docker_image
+      - build-docker-image
+
       
