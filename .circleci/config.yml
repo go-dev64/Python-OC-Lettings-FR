@@ -62,9 +62,9 @@ jobs:
     steps:
       - checkout
       - run:
-        name: "Deploy"
-        command:
-            curl-XGET(https://api.render.com/deploy/srv-cknu61ujmi5c73a0n920?key=k8fYtDRDmMA)
+          name: "Deploy"
+          command:
+              curl-XGET(https://api.render.com/deploy/srv-cknu61ujmi5c73a0n920?key=k8fYtDRDmMA)
 
       
 
