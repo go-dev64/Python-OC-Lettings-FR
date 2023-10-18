@@ -55,7 +55,7 @@ jobs:
       - run:
           name: Build images 
           command: |
-              docker build --build-arg SECRET_KEY_DJANGO --build-arg SENTRY_DNS -t image .
+              docker build --build-arg SECRET_KEY_DJANGO=$SECRET_KEY_DJANGO --build-arg SENTRY_DNS=$SENTRY_DNS -t image .
               echo docker images
               
 
