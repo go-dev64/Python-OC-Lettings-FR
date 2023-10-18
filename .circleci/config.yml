@@ -57,13 +57,13 @@ jobs:
               docker push godev64/oc_lettings:CIRCLE_SHA1
 
   deployment:
-   docker:
-    -image:cimg/base:stable
-   steps:
-    -checkout
-    - run:
-       name: "Deploy"
-       command:
+    docker:
+      -image:cimg/base:stable
+    steps:
+      - checkout
+      - run:
+        name: "Deploy"
+        command:
             curl-XGET(https://api.render.com/deploy/srv-cknu61ujmi5c73a0n920?key=k8fYtDRDmMA)
 
       
