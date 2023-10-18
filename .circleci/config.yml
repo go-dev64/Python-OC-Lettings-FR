@@ -55,15 +55,15 @@ jobs:
       - run:
           name: Build images 
           command: |
-              docker compose build
-              docker tag godev64/oc_lettings:latest godev64/oc_lettings:0.1.$CIRCLE_BUILD_NUM
+              docker build --build-arg SECRET_KEY_DJANGO=$SECRET_KEY_DJANGO --build-arg SENTRY_DNS=$SENTRY_DNS -t godev64/oc_lettings:$TAG .
+
 
       # Push image to docker HUB
       - run:
           name: Push Docker image
           command: |
               docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-              docker push godev64/oc_lettings:0.1.$CIRCLE_BUILD_NUM
+              docker push godev64/oc_lettings:$TAG
 
 
 
