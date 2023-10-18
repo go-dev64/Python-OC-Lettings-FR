@@ -71,7 +71,14 @@ workflows:
   oc_lettings_site:
     jobs: 
       - build_and_test
-      - build-docker-image
-      - deployment
+      - build-docker-image:
+        filters : 
+          branches :
+            only :
+              - master
+
+      - deployment:
+          requires:
+            - build-docker-image
 
       
