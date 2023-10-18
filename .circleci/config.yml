@@ -50,7 +50,7 @@ jobs:
       - run:
           name: Build images of services declared in docker-compose.yml
           command: |
-              docker compose -f docker-compose.yaml up -d
+              docker compose -f compose.yaml up -d
               docker tag godev64/oc_lettings:latest godev64/oc_lettings:$TAG
 
       # Push image to docker HUB
