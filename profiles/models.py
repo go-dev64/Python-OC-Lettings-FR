@@ -16,8 +16,11 @@ class Profile(models.Model):
     through a one-to-one relationship.
 
     Attributes:
-        user (OneToOneField): The user associated with the profile.
-        favorite_city (CharField): The user's favorite city (optional).
+    -----------
+        user : User
+            The user associated with the profile.
+        favorite_city : String
+            The user's favorite city.
 
     Methods:
         __str__(): Returns a string representation

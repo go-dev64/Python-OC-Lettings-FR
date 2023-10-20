@@ -1,6 +1,6 @@
-Lettings Models
+Profiles Module
 ================
 
-.. automodule:: lettings.models
+.. automodule:: profiles.views
    :members:
    :undoc-members:

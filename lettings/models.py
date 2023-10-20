@@ -10,7 +10,7 @@ class Address(models.Model):
     """model representing an adres in the application.
 
     Attributes:
-    ----------
+    -----------
         number : Integer
             numero of street
         street : String
