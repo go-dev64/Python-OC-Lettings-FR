@@ -1,4 +1,4 @@
-Lettings Views
+Lettings Module
 ===============
 
 .. automodule:: lettings.views

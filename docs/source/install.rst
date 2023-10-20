@@ -1,4 +1,4 @@
-Get Started
+Installation
 =============
 
 
@@ -54,12 +54,7 @@ In the root repository, create a **.env** folder to store sensitive data such as
    SENTRY_DNS='your sentry dns'
 
 
-
-
-BONUS
-------
-
-Play with Oc_lettings_site
+Get started
 ---------------------------
 
 * To launch the Oc_lettings_site, type in your console:
