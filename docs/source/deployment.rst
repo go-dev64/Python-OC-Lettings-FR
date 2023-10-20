@@ -78,6 +78,17 @@ To finish , it deploy on Render.
     - Circle CI account 
     - Render account , website project with deploy hook url.
 
+
+Render configuration
+--------------------
+
+In environment settings of Render, you have to define environment variable of:
+.. code-block:: console
+
+    SECRET_KEY_DJANGO= secret key of django
+    SENTRY_DNS=dns of sentry
+
+
 Circle Ci configuration 
 -----------------------
 

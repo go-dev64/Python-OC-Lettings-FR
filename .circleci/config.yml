@@ -54,7 +54,7 @@ jobs:
           name: Push Docker image
           command: |
               echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-              docker push godev64/oc_lettings:CIRCLE_SHA1
+              docker push godev64/oc_lettings:$CIRCLE_SHA1
 
   deployment:
     docker:

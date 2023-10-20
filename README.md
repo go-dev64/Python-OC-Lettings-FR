@@ -78,3 +78,52 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 ### Deploiement
 
+### Prérequis
+
+les meme prérequis que pour le developpement local sont demandé avec en plus:
+  - Compte ``Sentry`` ainsi que le ``DNS`` du projet
+  - Compte ``Docker Hub`` avec identifiants( username et mot de passe)
+  - Compte ``Render`` avec un projet Web / ainsi que l'url du **Deploy Hook**
+  - Compte ``Circle Ci``
+
+
+
+
+#### *Fonctionnement du deploiement*.
+
+Chaque commit ``pusher`` sur le repository GITHUB de l'application, va declencher le ***workflow Circle CI***.
+
+Le workflow est une serie de `Bluid`. Voici leurs fonctions:
+  * `Build_and_test` : Installe les packages de l'application, lance les tests unitaire et d'integrations. Le workflow passe au bluid suivant seulement si:
+      - Le commit est réalisé sur la branche ``master``.
+      - Tous les tests sont passés avec succés.
+      - La couverture des tests est superieur à 80%.  
+
+  * `Build-docker-image` :  Construction de l'``image Docker`` de l'application, redefini son tag avec le SHA du commit, et la pousse sur le repository ``Docker Hub``.
+  Si toutes ses opérations sont reussi, le workflow lance build suivant.
+  * ``deployment`` : Deploye le nouveau commit sur Render.
+
+
+**_Configuration Render:_**
+
+Dans votre ``projet web Render`` vous devez ajouter, dans `Environment`, les variables d'environnement suivantes:
+ - `SENTRY_DNS` = **_votre dns sentry du projet_**
+ - `SECRET_KEY_DJANGO` = **_votre clé secret Django_**
+
+Dans settings veillez a bien recuperer la cle `Deploy Hook`.
+
+**_Configuration Cercle CI:_**
+
+Dans votre projet Cercle CI, une fois votre projet lié a votre repository GITHUB de l'applications, vous devez égalment configurez les variables d'environnements dans `Project Settings`:
+
+ - `SENTRY_DNS` = **_votre dns sentry du projet_**
+ - `SECRET_KEY_DJANGO` = **_votre clé secret Django_**
+ - `DOCKERHUB_PASSWORD` = **_votre mot de passe Docker Hub_**
+ - `DOCKERHUB_USERNAME` = **_votre identifiant Docker Hub_**
+  - `RENDER_KEY` = la clé **_Deploy Hook de Render_**
+ 
+
+
+
+
+
