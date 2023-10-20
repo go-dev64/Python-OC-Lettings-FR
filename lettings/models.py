@@ -10,16 +10,20 @@ class Address(models.Model):
     """model representing an adres in the application.
 
     Attributes:
-        number (PositiveIntegerField): Numero of street
-        street (CharField): Street name.
-        city (CharField): City name.
-        state (CharField): Code of state : 2 characteres max
-        (ex. "NY" for New York).
+    ----------
+        number : Integer
+            numero of street
+        street : String
+            name of street
+        city : String
+            name of city
+        state : String
+            code of state , max 2 characters(ex. "NY" for New York)
+        zip_code : Integer
+            postal code
 
-        zip_code (PositiveIntegerField): Postal code.
-
-        country_iso_code (CharField): ISO code of country.
-        2 characteres max( ex. "USA").
+        country_iso_code : String
+            ISO code of country, max 3 characters( ex. "USA")
 
     Meta:
         verbose_name = "Address"
@@ -60,9 +64,11 @@ class Letting(models.Model):
     """Model representing a letting (rental) in the application.
 
     Attributes:
-        title (CharField): The title or name of the letting.
-        address (OneToOneField): The instance of Address associated
-        with the letting.
+    -----------
+        title : String
+            The title or name of the letting.
+        address : object Address
+            The instance of Address associated with the letting.
 
     Methods:
         __str__(): Returns a string representation
